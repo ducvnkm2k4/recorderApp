@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_nameApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trình ghi âm"
+        android:textSize="40sp" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nameApp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/img_setting"
+        android:maxWidth="250dp" />
+
+    <ImageView
+        android:id="@+id/img_setting"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/tv_nameApp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/img_setting" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_itemRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/relativeLayout_NewRecord"
+        android:layout_below="@id/img_setting"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_NewRecord"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroundViewLightMode" />
+
+        <ImageView
+            android:id="@+id/img_newRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/img_new_record" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layou_Setting"
+        android:layout_width="90dp"
+        android:layout_height="75dp"
+        android:layout_below="@id/img_setting"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/background_layout_setting"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Chọn" />
+
+        <TextView
+            android:id="@+id/tv_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Sắp xếp" />
+    </LinearLayout>
+
+</RelativeLayout>

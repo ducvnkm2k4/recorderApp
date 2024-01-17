@@ -1,0 +1,37 @@
+<!-- res/drawable/dot_column.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Dot 1 -->
+    <item
+        android:left="0dp"
+        android:top="0dp"
+        android:width="8dp"
+        android:height="8dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorDot" />
+        </shape>
+    </item>
+
+    <!-- Dot 2 -->
+    <item
+        android:left="0dp"
+        android:top="12dp"
+        android:width="8dp"
+        android:height="8dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorDot" />
+        </shape>
+    </item>
+
+    <!-- Dot 3 -->
+    <item
+        android:left="0dp"
+        android:top="24dp"
+        android:width="8dp"
+        android:height="8dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorDot" />
+        </shape>
+    </item>
+
+</layer-list>

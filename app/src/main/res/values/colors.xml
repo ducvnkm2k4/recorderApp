@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#808080</color>
+    <color name="colorDot">#808080</color>
+    <color name="outerRing">#64D3AC</color>
+    <color name="innerRing">#006E1C</color>
+    <color name="backgroundViewLightMode">#92F396</color>
+</resources>
