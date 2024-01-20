@@ -2,10 +2,11 @@ package com.example.recordingapp;
 
 import android.annotation.SuppressLint;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Record {
+public class Record implements Serializable {
     private int id;
     private String nameRecord;
     private String path;
@@ -13,13 +14,20 @@ public class Record {
     private Date dateSave;
     private boolean isVisible = false;
 
-    public Record(String nameRecord, String path, int duration, Date dateSave) {
+    public Record(int id,String nameRecord, String path, int duration, Date dateSave) {
+        this.id=id;
         this.nameRecord = nameRecord;
         this.path = path;
         this.duration = duration;
         this.dateSave = dateSave;
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getNameRecord() {
         return nameRecord;
     }
@@ -59,14 +67,17 @@ public class Record {
         this.isVisible = visible;
     }
     @SuppressLint("DefaultLocale")
-    public String formatDuration(int duration){
+    public static String formatDuration(int duration){
         int hour=duration/3600;
         int minute=(duration-hour*3600)/60;
         int second=(duration-hour*3600-minute*60);
         return String.format("%02d:%02d:%02d",hour,minute,second);
     }
-    public String formatDate(Date date){
+    public static String formatDate(Date date){
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         return String.valueOf(dateFormat.format(date));
+    }
+    public static String formatDefaultNameRecord(int n){
+        return "Bản ghi âm mới "+n;
     }
 }

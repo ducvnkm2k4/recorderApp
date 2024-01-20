@@ -55,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_mainItem"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp">
+        android:layout_marginEnd="40dp"
+        android:visibility="gone">
 
         <SeekBar
             android:id="@+id/seekBar_durationRecord"

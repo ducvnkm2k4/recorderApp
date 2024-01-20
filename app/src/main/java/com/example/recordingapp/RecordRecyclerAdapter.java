@@ -20,6 +20,7 @@ import java.util.List;
 public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAdapter.RecordRecyclerViewHolder> {
     private List<Record> recordList;
     private Context context;
+    private int selectedPosition = -1; // Initialize with an invalid position
 
     public RecordRecyclerAdapter(List<Record> recordList, Context context) {
         this.recordList = recordList;
@@ -37,6 +38,7 @@ public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAd
     public void onBindViewHolder(@NonNull RecordRecyclerAdapter.RecordRecyclerViewHolder holder, int position) {
         holder.setData(recordList.get(position));
         holder.setVisibilityLayout(position);
+        holder.toggleButton.setChecked(position == selectedPosition);
     }
 
     @Override
@@ -70,25 +72,28 @@ public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAd
             tv_nameRecord.setText(record.getNameRecord());
             tv_duration.setText(record.formatDuration(record.getDuration()));
             tv_dateSave.setText(record.formatDate(record.getDateSave()));
-            toggleButton.setChecked(record.isVisible());
         }
         @SuppressLint("NotifyDataSetChanged")
-        public void setVisibilityLayout(int position){
+        public void setVisibilityLayout(int position) {
+            toggleButton.setOnCheckedChangeListener(null); // Remove previous listener to prevent recursive calls
+
+            // Set the ToggleButton state based on the selected position
+            toggleButton.setChecked(position == selectedPosition);
+
             toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                Record currentRecord = recordList.get(getAdapterPosition());
                 if (isChecked) {
-                    currentRecord.setVisible(true);
-                    for (int i = 0; i < recordList.size(); i++) {
-                        if (i != position) {
-                            recordList.get(i).setVisible(false);
-                        }
-                    }
+                    // Update selected position and notify data change
+                    selectedPosition = getAdapterPosition();
+                    notifyDataSetChanged();
                 } else {
-                    currentRecord.setVisible(false);
+                    // Deselect the current item and notify data change
+                    selectedPosition = -1;
+                    notifyDataSetChanged();
                 }
-                notifyDataSetChanged();
             });
-            layout.setVisibility(recordList.get(position).isVisible() ? View.VISIBLE : View.GONE);
+
+            layout.setVisibility(selectedPosition == position ? View.VISIBLE : View.GONE);
         }
+
     }
 }
