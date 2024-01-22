@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
@@ -62,27 +63,37 @@ public class MainActivity extends AppCompatActivity {
         //init object
         database = new RecordDatabase(this);
         list = database.getData();
-        recyclerAdapter = new RecordRecyclerAdapter(list,MainActivity.this);
+        recyclerAdapter = new RecordRecyclerAdapter(MainActivity.this,list,database);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(recyclerAdapter);
         //set events
         createNewRecord();
         requestPermissions();
     }
-    private int findMinIdRecord() {
-        List<Record> listRecord = new ArrayList<>(list);
-        listRecord.sort((o1, o2) -> o1.getId() - o2.getId());
-        for (int i = 0; i < listRecord.size(); i++) {
-            if(i==listRecord.size()-1) return listRecord.get(i).getId()+1;
-            if (listRecord.get(i).getId() + 1 != listRecord.get(i + 1).getId())
-                return i + 1;
+    private int initIdRecord() {
+        int n = list.size();
+        if (n == 0) return 1;
+        boolean[] arr = new boolean[n + 1];
+
+        for (Record record : list) {
+            int id = record.getId();
+            if (id >= 1 && id <= n) {
+                arr[id] = true;
+            }
         }
-        return 1;
+        for (int i = 1; i <= n; i++) {
+            if (!arr[i]) {
+                return i;
+            }
+        }
+
+        return n + 1;
     }
+
     private void createNewRecord(){
         imgNewRecord.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-            int idNewRecord=findMinIdRecord();
+            int idNewRecord=initIdRecord();
             Record record =new Record(idNewRecord,Record.formatDefaultNameRecord(idNewRecord),null,0,new Date());
             intent.putExtra("recordObject",record);
             resultLauncher.launch(intent);

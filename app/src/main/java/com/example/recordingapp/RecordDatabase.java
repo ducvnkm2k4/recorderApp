@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -85,5 +84,24 @@ public class RecordDatabase extends SQLiteOpenHelper {
         }
         return recordList;
     }
-
+    public void deleteRecord(Record record){
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            db.delete(NAME_TABLE,COLUMN_ID+"=?",new String[]{String.valueOf(record.getId())});
+            db.close();
+        }catch (Exception e){
+            Log.e("error delete record database",e.getMessage());
+        }
+    }
+    public void updateNameRecord(Record record){
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_NAME_RECORD,record.getNameRecord());
+            db.update(NAME_TABLE,values,COLUMN_ID+"=?",new String[]{String.valueOf(record.getId())});
+            db.close();
+        }catch (Exception e){
+            Log.e("error update name record",e.getMessage());
+        }
+    }
 }

@@ -12,9 +12,9 @@ public class Record implements Serializable {
     private String path;
     private int duration;
     private Date dateSave;
-    private boolean isVisible = false;
+    private double speechRecord=1.0;
 
-    public Record(int id,String nameRecord, String path, int duration, Date dateSave) {
+    public Record(int id, String nameRecord, String path, int duration, Date dateSave) {
         this.id=id;
         this.nameRecord = nameRecord;
         this.path = path;
@@ -59,12 +59,11 @@ public class Record implements Serializable {
     public void setDateSave(Date dateSave) {
         this.dateSave = dateSave;
     }
-    public boolean isVisible() {
-        return this.isVisible;
+    public double getSpeechRecord() {
+        return speechRecord;
     }
-
-    public void setVisible(boolean visible) {
-        this.isVisible = visible;
+    public void setSpeechRecord(double speechRecord) {
+        this.speechRecord = speechRecord;
     }
     @SuppressLint("DefaultLocale")
     public static String formatDuration(int duration){
@@ -80,4 +79,5 @@ public class Record implements Serializable {
     public static String formatDefaultNameRecord(int n){
         return "Bản ghi âm mới "+n;
     }
+
 }
