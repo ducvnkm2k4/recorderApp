@@ -69,7 +69,19 @@ public class MainActivity extends AppCompatActivity {
         //set events
         createNewRecord();
         requestPermissions();
+        setEventSearchItem();
     }
+
+    @Override
+    public void onBackPressed() {
+        if(!searchView.isIconified()){
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+
+    }
+
     private int initIdRecord() {
         int n = list.size();
         if (n == 0) return 1;
@@ -89,7 +101,21 @@ public class MainActivity extends AppCompatActivity {
 
         return n + 1;
     }
+    private void setEventSearchItem(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                recyclerAdapter.getFilter().filter(query);
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+    }
     private void createNewRecord(){
         imgNewRecord.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RecordActivity.class);

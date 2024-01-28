@@ -1,5 +1,8 @@
 package com.example.recordingapp;
 
+
+import static java.util.Collections.addAll;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -18,11 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAdapter.RecordRecyclerViewHolder> {
+public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAdapter.RecordRecyclerViewHolder> implements Filterable {
     private final Context context;
-    private final List<Record> recordList;
+    private  List<Record> recordList;
+    private  List<Record> originalList;
     private int selectedPosition = -1;
     private final RecordDatabase database;
 
@@ -30,6 +37,7 @@ public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAd
         this.context = context;
         this.recordList = recordList;
         this.database = database;
+        this.originalList=new ArrayList<>(recordList);
     }
 
     @NonNull
@@ -53,6 +61,36 @@ public class RecordRecyclerAdapter extends RecyclerView.Adapter<RecordRecyclerAd
     public int getItemCount() {
         return recordList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String stringSearch=constraint.toString();
+                if(stringSearch.isEmpty())
+                    recordList=originalList;
+                else {
+                    List<Record> resultList = new ArrayList<>();
+                    for (Record record : originalList)
+                        if (record.getNameRecord().toLowerCase().contains(stringSearch.toLowerCase()))
+                            resultList.add(record);
+                    recordList=resultList;
+                }
+                FilterResults filterResults =new FilterResults();
+                filterResults.values = recordList;
+                return filterResults;
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                recordList = (List<Record>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public class RecordRecyclerViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_nameRecord;
